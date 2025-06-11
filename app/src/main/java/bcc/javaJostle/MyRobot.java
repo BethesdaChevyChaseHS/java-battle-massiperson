@@ -2,9 +2,10 @@ package bcc.javaJostle;
 
 import java.util.ArrayList;
 public class MyRobot extends Robot{
+    private int timer = 0;
     public MyRobot(int x, int y){
-        super(x, y, 3, 3, 2, 2,"bob", "myRobotImage.png", "defaultProjectileImage.png");
-        // Health: 3, Speed: 3, Attack Speed: 2, Projectile Strength: 2
+        super(x, y, 2, 1, 4, 3,"bob", "myRobotImage.png", "defaultProjectileImage.png");
+        // Health: 2, Speed: 1, Attack Speed: 4, Projectile Strength: 3
         // Total = 10
         // Image name is "myRobotImage.png"
     }
@@ -23,5 +24,59 @@ public class MyRobot extends Robot{
          only shoot when canAttack() is true!
         */
        // System.out.println("Thinking...");
+       if (Math.random() < 0.5)
+       {
+        xMove();
+       }
+       else
+       {
+        yMove();
+       }
+
+       
+
+       if(canAttack()){
+            for(Robot robot : robots) {
+                if (robot != this && robot.isAlive() ){
+                    shootAtLocation(robot.getX() + Utilities.ROBOT_SIZE/2, robot.getY() + Utilities.ROBOT_SIZE/2);
+                    break; // Shoot at the first target found
+                }
+            }
+        }
+    
+    }
+
+    public void xMove()
+    {
+       while (timer < 160)
+       {
+        if(timer %40 < 20)
+        {
+            xMovement = 1;
+        }
+        else 
+        {
+            xMovement = -1;
+        }
+        timer++;
+       }
+       timer = 0;
+    }
+
+    public void yMove()
+    {
+       while (timer < 160)
+       {
+        if(timer %40 < 20)
+        {
+            yMovement = -1;
+        }
+        else 
+        {
+            yMovement = 1;
+        }
+        timer++;
+       }
+       timer = 0;
     }
 }
